@@ -1,0 +1,18 @@
+- name: Error-handling 
+  hosts: all                                                        # mention the group on which we have to do the configuration management.
+  gather_facts: false                                             # by default this will be true. if kept to false then ansible dont gather facts before executing the play.
+                                                                # ignore_unreachable: false #play level declartion to ignore # the execution of the playbook is from top to bottom by default. if there are errors/issues with task execution. ansible wil stop executing the playbook. so inorder to remove the chain reaction/dependencies on each tasks we can use ignore option.
+  vars:                                                          # {{var}} - this is how we reference a variable.
+    - msg: hello
+    - ping: this is pinged. 
+
+  tasks:
+    - name: task failed demo
+      ansible.builtin.shell: ps -ef | grep java | grep -v grep 
+      ignore_errors: True # by this if there is any error the task execution will be ignored and move on to the another task.
+
+    - name: ping resule
+      ansible.builtin.ping: 
+        data: pong
+                                                                           #ignore_unreachable: true #task level # the execution of the playbook is from top to bottom by default. if there are errors/issues with task execution. ansible wil stop executing the playbook. so inorder to remove the chain reaction/dependencies on each tasks we can use ignore option.
+       

@@ -1,0 +1,29 @@
+- name: installing software
+  hosts: all
+  become: true
+  ignore_unreachable: true
+  tags: install
+  tasks:
+    - name: install the nginx
+      tags: install.nginx  
+      ansible.builtin.package:
+        name: nginx
+        state: present # state present means it should install the nginx, absent means it should remove/uninstall the nginx, latest means update the latest/update.
+        
+    - name: copying a file
+      ansible.builtin.copy:
+        src: /home/ec2-user/DevOps/testing.txt # path that we want to copy from our system
+        dest: /home/ec2-user/testing.txt # destination/path to paste on target system.
+    
+- name: installing software
+  hosts: all
+  tags: uninstall
+  become: true ## become is used for privilege escalation: become: true implies that the below task will be executed with sudo privileges. there are othe thigs with become as well.
+  tasks:
+    - name: install the nginx
+      tags: uninstall.nginx  
+      ansible.builtin.package:
+        name: nginx
+        state: absent
+
+

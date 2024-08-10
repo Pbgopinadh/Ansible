@@ -1,0 +1,25 @@
+- name: Varalibles and magic variables use 
+  hosts: all  # mention the group on which we have to do the configuration management.
+
+  # gather_facts: false # by default this will be true. if kept to false then ansible dont gather facts before executing the play.
+
+  vars:  # {{var}} - this is how we reference a variable.
+    - msg: hello
+    - ping: this is pinged. 
+
+  tasks: 
+    - name: ping resule
+      ansible.builtin.ping: 
+        data: pong
+
+    - name: Prints lines of messages
+      ansible.builtin.debug:
+        msg: 
+          - "testing the varialbe concept - {{ping}}"   
+          - "testing the varialbe concept - {{msg}}"  
+          - "the user profile running this is {{ansible_user_id}} and the cd is {{ansible_user_dir}}"  # ansible_user_id and ansible_user_dir are declared anywhere these are called magical varaibles or In Ansible, "magical variables" refer to built-in variables that are automatically available to playbooks, tasks, and roles
+          # if we keep the gathering_facts as false then we wont get the above variables.
+          - "the OS running is {{ansible_distribution}} and the version is {{ansible_distribution_version}}"
+
+      vars:
+        - ping: task level var            

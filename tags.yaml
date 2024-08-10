@@ -1,0 +1,23 @@
+- name: tags play level and task level
+  hosts: all  # mention the group on which we have to do the configuration management.
+  tags: frontend
+  tasks: 
+    - name: front end
+      tags: backend
+      ansible.builtin.debug:
+        msg: 
+          - "testing the varialbe concept - {{ping}}" 
+      vars:
+        - ping: frontend     
+
+- name: 2nd tagged play 
+  hosts: all
+  tags: backend 
+  tasks:
+    - name: Prints lines of messages
+      tags: frontend
+      ansible.builtin.debug:
+        msg: 
+          - "testing the varialbe concept - {{ping}}" 
+      vars:
+        - ping: backend           
