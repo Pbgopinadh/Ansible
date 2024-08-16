@@ -27,7 +27,7 @@
 
 - name: unzipping the file after download
   ansible.builtin.unarchive:
-    src: {{URL_FRONTEND}}
+    src: "{{URL_FRONTEND}}"
     dest: "{{nginx_path}}"
     remote_src: yes # this should be yes if the download and the unzip should be done on remote machine.
 
