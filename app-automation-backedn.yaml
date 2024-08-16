@@ -1,8 +1,0 @@
-- name: Backend installation
-  hosts: all
-  tags: backend_install
-  vars:
-  ignore_unreachable: true
-  become: true
-  tasks:
-    - name:
