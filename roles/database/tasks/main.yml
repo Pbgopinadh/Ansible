@@ -1,0 +1,16 @@
+## installation of database in this case mysql
+
+# dnf install mysql-server -y
+# systemctl enable mysqld
+# mysql_secure_installation --set-root-pass ExpenseApp@1
+
+- name: installing nginx ## we are using dnf install
+  ansible.builtin.dnf:
+    name: "{{APP_NAME}}"                    ## we can download a version by simply mentioning nginx-version also nginx >=2.4 will install 2.4 or latest version if 2.4 is not present.
+    state: present                   ## install.
+
+- name: Make sure a service unit is running
+  ansible.builtin.systemd_service:
+    name: "{{APP_NAME}}"
+    state: restarted
+    enabled: true
