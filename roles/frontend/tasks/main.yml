@@ -13,10 +13,6 @@
     name: nginx                      ## we can download a version by simply mentioning nginx-version also nginx >=2.4 will install 2.4 or latest version if 2.4 is not present.
     state: present                   ## install.
 
-- name: Start service nginx
-  ansible.builtin.service:
-    name: nginx
-    state: started
 
 - name: Copy file
   ansible.builtin.copy:
@@ -35,10 +31,27 @@
     dest: /usr/share/nginx/html
     remote_src: yes # this should be yes if the download and the unzip should be done on remote machine.
 
-- name: Restart service nginx
-  ansible.builtin.service:
+
+#- name: Restart service nginx
+#  ansible.builtin.service:
+#    name: nginx
+#    state: restarted
+
+#- name: Start service nginx
+#  ansible.builtin.service:
+#    name: nginx
+#    state: started
+
+# instead of above service which require multiple task to start enable and resrat the service we can use another module known as daemon whcih is used below.
+
+- name: Make sure a service unit is running
+  ansible.builtin.systemd_service:
     name: nginx
     state: restarted
+    enabled: true
+    daemon_reload: true
+
+
 
 
 
