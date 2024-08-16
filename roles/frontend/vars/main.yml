@@ -1,0 +1,4 @@
+conf_file: "/etc/nginx/default.d/expense.conf"
+nginx_path: "/usr/share/nginx/html"
+APP_NAME: "nginx"
+URL_FRONTEND: "https://expense-web-app.s3.amazonaws.com/frontend.zip"
