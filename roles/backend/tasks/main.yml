@@ -48,7 +48,7 @@
     creates: /app
     remote_src: true
 
-- name: Run tasks/other.yaml instead of 'main'
+- name: Run tasks/other.yaml instead of 'main' instead of writing more than twice we can use a role which has common tasks so that they can be called everytime.
   ansible.builtin.include_role:
     name: common # name of the role from which the tasks should be run. ## test using multiple roles 
     tasks_from: common1 # name of file from which the tasks should run. no need to mention the .yml extension. ## try using the multiple tasks from different roles. to see if this works. 
