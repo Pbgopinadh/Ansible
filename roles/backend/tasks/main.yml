@@ -1,99 +1,51 @@
-#dnf install nginx -y
-#cp exp.conf /etc/nginx/default.d/expense.conf
-#systemctl enable nginx
-#rm -rf /usr/share/nginx/html/*
-#curl -o /tmp/frontend.zip https://expense-web-app.s3.amazonaws.com/frontend.zip
-#cd /usr/share/nginx/html
-#unzip /tmp/frontend.zip
-#systemctl restart nginx
-#echo ("if you are seeing this then the installation of backend is successful.")
+# ## installation of database in this case Nodejs
+# dnf module list 
+# dnf module disable nodejs -y
+# dnf module enable nodejs:20 -y 
+# dnf install nodejs -y
+# cp back.service /etc/systemd/system/backend.service
+# useradd expense
+# mkdir /app 
+# curl -o /tmp/backend.zip https://expense-web-app.s3.amazonaws.com/backend.zip 
+# cd /app 
+# unzip /tmp/backend.zip
+# cd /app 
+# npm install  
+# chmod -R 775 /app
+# chown -R expense:expense /app
+# dnf install mysql-server -y
+# mysql -h 3.92.176.39 -uroot -pExpenseApp@1 < /app/schema/backend.sql 
+# systemctl daemon-reload
+# systemctl enable backend 
+# systemctl start backend
 
-# - name: installing nginx ## we are using dnf install
-#   ansible.builtin.dnf:
-#     name: nginx                      ## we can download a version by simply mentioning nginx-version also nginx >=2.4 will install 2.4 or latest version if 2.4 is not present.
-#     state: present                   ## install.
+- name: disable a nodejs module.
+  ansible.builtin.shell: dnf module disable nodejs -y
 
+- name: enable a nodejs 20 version module.
+  ansible.builtin.shell: dnf module enable nodejs:20 -y 
 
-# - name: Copy file
-#   ansible.builtin.copy:
-#     src: proxy.conf
-#     dest: /etc/nginx/default.d/expense.conf
-
-# - name: Recursively remove directory
-#   become : true 
-#   ansible.builtin.file:
-#     path: /usr/share/nginx/html/*
-#     state: absent ## this means that the above path will be deleted.
-
-# - name: unzipping the file after download
-#   ansible.builtin.unarchive:
-#     src: https://expense-web-app.s3.amazonaws.com/frontend.zip
-#     dest: /usr/share/nginx/html
-#     remote_src: yes # this should be yes if the download and the unzip should be done on remote machine.
-
-
-# #- name: Restart service nginx
-# #  ansible.builtin.service:
-# #    name: nginx
-# #    state: restarted
-
-# #- name: Start service nginx
-# #  ansible.builtin.service:
-# #    name: nginx
-# #    state: started
-
-# # instead of above service which require multiple task to start enable and resrat the service we can use another module known as daemon whcih is used below.
-
-# - name: Make sure a service unit is running
-#   ansible.builtin.systemd_service:
-#     name: nginx
-#     state: started
-#     enabled: true
-#     daemon_reload: true
-
-- name: installing nginx ## we are using dnf install
+- name: install nodejs
   ansible.builtin.dnf:
-    name: "{{APP_NAME}}"                    ## we can download a version by simply mentioning nginx-version also nginx >=2.4 will install 2.4 or latest version if 2.4 is not present.
-    state: present                   ## install.
+    name: nodejs
+    state: present
 
-
-- name: Copy file
+- name: copy a file
   ansible.builtin.copy:
-    src: proxy.conf
-    dest: "{{conf_file}}" ## conf_file
+    src: back.service
+    dest: /etc/systemd/system/backend.service
 
-- name: Recursively remove directory
-  become : true 
-  ansible.builtin.file:
-    path: "{{nginx_path}}/*"
-    state: absent ## this means that the above path will be deleted.
+- name: Create user expense
+  ansible.builtin.user:
+    name: expense
+    password: Expense@001
+    create_home: yes # this will create the home directory
 
-- name: unzipping the file after download
+- name: Unarchive a file if it doesn't already exist
   ansible.builtin.unarchive:
-    src: "{{URL_FRONTEND}}" ## should use multiple quotes when using the variables these variables are stored in vars/main.yml
-    dest: "{{nginx_path}}"
-    remote_src: yes # this should be yes if the download and the unzip should be done on remote machine.
-
-
-#- name: Restart service nginx
-#  ansible.builtin.service:
-#    name: nginx
-#    state: restarted
-
-#- name: Start service nginx
-#  ansible.builtin.service:
-#    name: nginx
-#    state: started
-
-# instead of above service which require multiple task to start enable and resrat the service we can use another module known as daemon whcih is used below.
-
-- name: Make sure a service unit is running
-  ansible.builtin.systemd_service:
-    name: "{{APP_NAME}}"
-    state: restarted
-    enabled: true
-    daemon_reload: true
-
+    src: /https://expense-web-app.s3.amazonaws.com/backend.zip
+    dest: /app
+    creates: /app
 
 
 
