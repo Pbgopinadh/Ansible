@@ -50,8 +50,8 @@
 
 - name: Run tasks/other.yaml instead of 'main'
   ansible.builtin.include_role:
-    name: common # name of the role from which the tasks should be run.
-    tasks_from: common1 # name of file from which the tasks should run. no need to mention the .yml extension.
+    name: common # name of the role from which the tasks should be run. ## test using multiple roles 
+    tasks_from: common1 # name of file from which the tasks should run. no need to mention the .yml extension. ## try using the multiple tasks from different roles. to see if this works. 
 
 - name: Install "version" node.js package.
   community.general.npm:
