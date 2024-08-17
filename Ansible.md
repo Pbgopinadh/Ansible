@@ -170,3 +170,45 @@ roles/
     webtier/              # same kind of structure as "common" was above, done for the webtier role
     monitoring/           # ""
     fooapp/               # ""
+
+
+so, we have ansible provided modules to which we dont need to check the dependices as ansible will take care of them.
+but modules which are provided by community we have to check the pre-reqs and dependencies 
+
+copy module and template module. how do we use.
+
+copy module just copies the file copy - paste
+but using the template module -> We can paramterize the file instead of hard coding the values. we can use variables in the roles to change the contents of the file.
+
+<!-- - name: Template a file, using symbolic modes (equivalent to 0644)
+  ansible.builtin.template:
+    src: /mytemplates/foo.service --> this foo file can have variables in the file which is dyanmic
+    dest: /etc/file.conf --> when we use this module instead of file path we have to use template path under the roles.
+
+<!-- [Unit]
+Description = Backend Service
+
+[Service]
+User={{USER}} - here in the foo.service file i can include a variable and this variable is declared in the vars path of the role.
+Environment=DB_HOST="localhost"
+ExecStart=/bin/node /app/index.js
+SyslogIdentifier=backend
+
+[Install]
+WantedBy=multi-user.target -->
+
+
+- name: Run tasks/other.yaml instead of 'main'
+  ansible.builtin.include_role:
+    name: myrole
+    tasks_from: other
+
+
+- name: Apply tags to tasks within included file
+  ansible.builtin.include_role:
+    name: install
+    apply:
+      tags:
+        - install
+  tags:
+    - always
