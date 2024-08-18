@@ -248,7 +248,7 @@ we use pull when infra is dyanmic (when scaling is used for infra managemnet bas
 
  so ansible pull is very powerful mechanism 
 
- but when using the ansible pull - we should make sure that the hosts: localhost as the changes should the node itself.
+ but when using the ansible pull - we should make sure that the hosts: localhost as the changes should the node itself in the playbook.
 
 
 
