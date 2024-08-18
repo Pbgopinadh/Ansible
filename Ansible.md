@@ -226,4 +226,29 @@ dependencies:
 see the usage of when paramter.
 
 
+# Ansible Pull:
+
+but theres a catch for this, the node system should have ansible installed to execute ansible pull.
+
+## Ansible push vs pull:
+
+we use push when the infra is static. we have a ansible controller through which we push to other nodes
+
+we use pull when infra is dyanmic (when scaling is used for infra managemnet based on load)
+
+"Companies maintain their own AMI". so in this ansible pull case - we must make sure the pyhton version and ansible as part of AMI. to save time that is required to install ansible.
+
+### how to use ansible pull:
+
+ ansible-pull -U urltothegitrepo -e anyexternalparameters playbookname.yml
+
+ Wxample: ansible-pull -U https://github.com/Pbgopinadh/linux.git -e COMPONENT=frontend/backend/database roleuse.yaml
+
+ the playbook name should be in the repo that we mention in -U. it is going to pull and run the playbook based on the name. also the playbook consists of roles and those roles can be varaiblzed/parameterized and have role depenceies.
+
+ so ansible pull is very powerful mechanism 
+
+ but when using the ansible pull - we should make sure that the hosts: localhost as the changes should the node itself.
+
+
 
