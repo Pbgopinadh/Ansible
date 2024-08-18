@@ -212,3 +212,18 @@ WantedBy=multi-user.target -->
         - install
   tags:
     - always
+
+## how can we create a role dependcy:
+
+we achieve this by using the meta path of the roles where the other role tasks/main.yml should be executed first before the current role main.yml
+so we want to create the meta path for roles which has dependencies on other roles.
+
+for example i have created the meta path in backend meta/tasks/main.yml
+
+dependencies:
+    - role: rolename 
+
+see the usage of when paramter.
+
+
+

@@ -1,0 +1,2 @@
+dependencies:
+  - role: common # so using this we can create role dependenices which means common/tasks/main.yml will be executed first before the current role/tasks/main.yml executes.
