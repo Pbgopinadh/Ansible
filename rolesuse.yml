@@ -1,4 +1,4 @@
-- name: using roles to install the fronend
+- name: using roles to install the {{COMPONENT}}
   hosts: all # for ansible pull this must be localhost
   become: true
   roles:
