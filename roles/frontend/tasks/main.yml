@@ -51,10 +51,10 @@
 #     enabled: true
 #     daemon_reload: true
 
-- name: installing nginx ## we are using dnf install
-  ansible.builtin.dnf:
-    name: "{{APP_NAME}}"                    ## we can download a version by simply mentioning nginx-version also nginx >=2.4 will install 2.4 or latest version if 2.4 is not present.
-    state: present                   ## install.
+# - name: installing nginx ## we are using dnf install
+#   ansible.builtin.dnf:
+#     name: "{{APP_NAME}}"                    ## we can download a version by simply mentioning nginx-version also nginx >=2.4 will install 2.4 or latest version if 2.4 is not present.
+#     state: present                   ## install.
 
 
 - name: Copy file
@@ -62,17 +62,17 @@
     src: proxy.conf
     dest: "{{conf_file}}" ## conf_file
 
-- name: Recursively remove directory
-  become : true 
-  ansible.builtin.file:
-    path: "{{nginx_path}}/*"
-    state: absent ## this means that the above path will be deleted.
+# - name: Recursively remove directory
+#   become : true 
+#   ansible.builtin.file:
+#     path: "{{nginx_path}}/*"
+#     state: absent ## this means that the above path will be deleted.
 
-- name: unzipping the file after download
-  ansible.builtin.unarchive:
-    src: "{{URL_FRONTEND}}" ## should use multiple quotes when using the variables these variables are stored in vars/main.yml
-    dest: "{{nginx_path}}"
-    remote_src: yes # this should be yes if the download and the unzip should be done on remote machine.
+# - name: unzipping the file after download
+#   ansible.builtin.unarchive:
+#     src: "{{URL_FRONTEND}}" ## should use multiple quotes when using the variables these variables are stored in vars/main.yml
+#     dest: "{{nginx_path}}"
+#     remote_src: yes # this should be yes if the download and the unzip should be done on remote machine.
 
 
 #- name: Restart service nginx
