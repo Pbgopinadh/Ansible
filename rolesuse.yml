@@ -2,4 +2,4 @@
   hosts: all # for ansible pull this must be localhost
   become: true
   roles:
-    - role: {{COMPONENT}}
+    - role: "{{COMPONENT}}"

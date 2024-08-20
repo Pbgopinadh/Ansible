@@ -2,3 +2,4 @@ conf_file: "/etc/nginx/default.d/expense.conf"
 nginx_path: "/usr/share/nginx/html"
 APP_NAME: "nginx" # everthing should be in double quotes.
 URL_FRONTEND: "https://expense-web-app.s3.amazonaws.com/frontend.zip"
+COMPONENT: "frontend"

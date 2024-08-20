@@ -19,64 +19,64 @@
 # systemctl enable backend 
 # systemctl start backend
 
-- name: disable a nodejs module.
-  ansible.builtin.shell: dnf module disable nodejs -y
+# - name: disable a nodejs module.
+#   ansible.builtin.shell: dnf module disable nodejs -y
 
-- name: enable a nodejs 20 version module.
-  ansible.builtin.shell: dnf module enable nodejs:20 -y 
+# - name: enable a nodejs 20 version module.
+#   ansible.builtin.shell: dnf module enable nodejs:20 -y 
 
-- name: install nodejs
-  ansible.builtin.dnf:
-    name: nodejs
-    state: present
+# - name: install nodejs
+#   ansible.builtin.dnf:
+#     name: nodejs
+#     state: present
 
-- name: copy a file
-  ansible.builtin.copy:
-    src: back.service
-    dest: /etc/systemd/system/backend.service
+# - name: copy a file
+#   ansible.builtin.copy:
+#     src: back.service
+#     dest: /etc/systemd/system/backend.service
 
-- name: Create user expense
-  ansible.builtin.user:
-    name: expense
-    password: Expense@001
-    create_home: yes # this will create the home directory
+# - name: Create user expense
+#   ansible.builtin.user:
+#     name: expense
+#     password: Expense@001
+#     create_home: yes # this will create the home directory
 
-- name: Unarchive a file if it doesn't already exist
-  ansible.builtin.unarchive:
-    src: /https://expense-web-app.s3.amazonaws.com/backend.zip
-    dest: /app
-    creates: /app
-    remote_src: true
+# - name: Unarchive a file if it doesn't already exist
+#   ansible.builtin.unarchive:
+#     src: /https://expense-web-app.s3.amazonaws.com/backend.zip
+#     dest: /app
+#     creates: /app
+#     remote_src: true
 
 - name: Run tasks/other.yaml instead of 'main' instead of writing more than twice we can use a role which has common tasks so that they can be called everytime.
   ansible.builtin.include_role:
     name: common # name of the role from which the tasks should be run. ## test using multiple roles 
     tasks_from: common1 # name of file from which the tasks should run. no need to mention the .yml extension. ## try using the multiple tasks from different roles. to see if this works. 
 
-- name: Install "version" node.js package.
-  community.general.npm:
-    name: 
-    path: 
+# - name: Install "version" node.js package.
+#   community.general.npm:
+#     name: 
+#     path: 
 
-- name: Change file ownership, group and permissions of /app
-  ansible.builtin.file:
-    path: /app
-    owner: expense
-    group: expense
-    mode: '755'
+# - name: Change file ownership, group and permissions of /app
+#   ansible.builtin.file:
+#     path: /app
+#     owner: expense
+#     group: expense
+#     mode: '755'
 
-- name: disable a nodejs module.
-  ansible.builtin.shell: dnf install mysql-server -y
+# - name: disable a nodejs module.
+#   ansible.builtin.shell: dnf install mysql-server -y
 
-- name: disable a nodejs module.
-  ansible.builtin.shell: mysql -h 3.92.176.39 -uroot -pExpenseApp@1 < /app/schema/backend.sql 
+# - name: disable a nodejs module.
+#   ansible.builtin.shell: mysql -h 3.92.176.39 -uroot -pExpenseApp@1 < /app/schema/backend.sql 
 
-- name: Make sure a service unit is running
-  ansible.builtin.systemd_service:
-    name: "{{APP_NAME}}"
-    state: restarted
-    enabled: true
-    daemon_reload: true
+# - name: Make sure a service unit is running
+#   ansible.builtin.systemd_service:
+#     name: "{{APP_NAME}}"
+#     state: restarted
+#     enabled: true
+#     daemon_reload: true
 
 
 
