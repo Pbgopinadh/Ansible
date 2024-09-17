@@ -265,10 +265,10 @@ we use pull when infra is dyanmic (when scaling is used for infra managemnet bas
 
       ansible.builtin.debug:
 
-        msg: "Psw is {{secrets.MYSQL_PASS}}"
+        msg: "Psw is {{secrets.SSH_PWD}}"
 
       vars:
-      
+
         secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=expense-dev/data/backend token={{token}} url=https://vault.expense.internal:8200 validate_certs=False') }}"
 
 
