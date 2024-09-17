@@ -256,12 +256,19 @@ we use pull when infra is dyanmic (when scaling is used for infra managemnet bas
 
 
 - name: Reading secrets from vault 
+
   hosts: localhost 
+
   tasks: 
+
     - name: Connect to Vault using TLS
+
       ansible.builtin.debug:
+
         msg: "Psw is {{secrets.MYSQL_PASS}}"
+
       vars:
+      
         secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=expense-dev/data/backend token={{token}} url=https://vault.expense.internal:8200 validate_certs=False') }}"
 
 
