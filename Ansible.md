@@ -270,8 +270,11 @@ we have to install the HVAC library inorder to use the lookup plugin.
 lookup is a plugin that will search for the secrets in a vault.
 
 secret = path to the secrets
+
 token = root token to access the vault
+
 url = url of the vault VM with port
+
 vaildate_certs=false as we the certifcate vaildation will fail. we said ansible to not validate the certificates.
 
 ![alt text](image.png)
