@@ -250,5 +250,30 @@ we use pull when infra is dyanmic (when scaling is used for infra managemnet bas
 
  but when using the ansible pull - we should make sure that the hosts: localhost as the changes should the node itself in the playbook.
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+## how to use vault in Ansible
 
 
+- name: Reading secrets from vault 
+  hosts: localhost 
+  tasks: 
+    - name: Connect to Vault using TLS
+      ansible.builtin.debug:
+        msg: "Psw is {{secrets.MYSQL_PASS}}"
+      vars:
+        secrets: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=expense-dev/data/backend token={{token}} url=https://vault.expense.internal:8200 validate_certs=False') }}"
+
+
+we have to install the HVAC library inorder to use the lookup plugin.
+
+lookup is a plugin that will search for the secrets in a vault.
+
+secret = path to the secrets
+token = root token to access the vault
+url = url of the vault VM with port
+vaildate_certs=false as we the certifcate vaildation will fail. we said ansible to not validate the certificates.
+
+![alt text](image.png)
+
+for the above image the path to retrieve the secrets will be kv/data/sshpwd and this is how we retrieve the passowrds {{secrets.MYSQL_PASS}}
